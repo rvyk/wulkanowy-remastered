@@ -1,5 +1,6 @@
 "use client";
 
+import useBetterMediaQuery from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 import { WulkanowyMessages } from "@/types/wulkanowy";
 import { X } from "lucide-react";
@@ -7,6 +8,8 @@ import { useEffect, useState } from "react";
 
 const Message: React.FC = () => {
   const [message, setMessage] = useState<WulkanowyMessages>();
+  const isDesktop = useBetterMediaQuery("(min-width: 768px)");
+
   let hiddenMessages: number[] = [];
   if (typeof window !== "undefined") {
     hiddenMessages =
@@ -46,8 +49,8 @@ const Message: React.FC = () => {
 
   return (
     <div
-      data-aos="fade-up"
-      data-aos-delay="1000"
+      data-aos={isDesktop ? "fade-up" : "fade-down"}
+      data-aos-delay={isDesktop ? 1000 : 0}
       data-aos-once="true"
       data-aos-offset="-500"
       className="flex justify-center relative items-center lg:fixed max-lg:top-6 lg:bottom-6 z-50 w-full px-6"
