@@ -5,112 +5,96 @@ const features = [
     feature: "Średnia ocen",
     uonet: "Zależy od ustawień szkoły",
     vulcan: "Zależy od ustawień szkoły",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Frekwencja (widok dni)",
     uonet: "Dostępne",
     vulcan: "Dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Frekwencja (podsumowanie)",
     uonet: "Dostępne",
     vulcan: "Dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Uwagi",
     uonet: "Dostępne",
     vulcan: "Dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Uczeń na tle klasy",
     uonet: "Dostępne",
     vulcan: "Nie dostępne",
-    szkolny: "Nie dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Dane ucznia",
     uonet: "Dostępne",
     vulcan: "Nie dostępne",
-    szkolny: "Nie dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Dane szkoły",
     uonet: "Dostępne",
     vulcan: "Częściowa obsługa",
-    szkolny: "Nie dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Nauczyciele",
     uonet: "Dostępne",
     vulcan: "Dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Lekcje zrealizowane",
     uonet: "Dostępne",
     vulcan: "Dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Wiadomości",
     uonet: "Dostępne",
     vulcan: "Dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Usprawiedliwienia",
     uonet: "Dostępne",
     vulcan: "Dostępne",
-    szkolny: "Nie dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Szczęśliwy numerek",
     uonet: "Dostępne",
     vulcan: "Dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Powiadomienia o nadchodzących lekcjach",
     uonet: "Nie dotyczy",
     vulcan: "Nie dostępne",
-    szkolny: "Nie dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Oznaczanie zadań jako wykonane",
     uonet: "Dostępne",
     vulcan: "Nie dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Szybkie skróty po przytrzymaniu aplikacji",
     uonet: "Nie dotyczy",
     vulcan: "Nie dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
   {
     feature: "Logowanie za pomocą loginu i hasła",
     uonet: "Dostępne",
     vulcan: "Nie dostępne",
-    szkolny: "Dostępne",
     wulkanowy: "Dostępne",
   },
 ];
@@ -129,7 +113,7 @@ const Functions: React.FC<{
           data-aos="fade-right"
           className="text-4xl font-semibold text-onSurface pb-12"
         >
-          Porównaj funkcje różnych aplikacji // imo do wywalenia
+          Porównaj funkcje różnych aplikacji
         </h2>
         <table data-aos="fade-up" data-aos-delay="200" className="w-full">
           <thead className="">
@@ -142,9 +126,6 @@ const Functions: React.FC<{
               </th>
               <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg">
                 Dzienniczek VULCAN
-              </th>
-              <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg">
-                Szkolny.eu
               </th>
               <th className="bg-surfaceContainerLow text-onSurfaceVariant  px-6 py-6 text-lg rounded-tr-3xl">
                 Wulkanowy
@@ -176,12 +157,7 @@ const Functions: React.FC<{
                 <td className="text-center font-medium py-5">
                   <div className="grid place-items-center">
                     {FeatureToIcon({ feature: feature.vulcan })}
-                  </div>{" "}
-                </td>
-                <td className="text-center font-medium py-5 ">
-                  <div className="grid place-items-center">
-                    {FeatureToIcon({ feature: feature.szkolny })}
-                  </div>{" "}
+                  </div>
                 </td>
                 <td
                   className={`${
@@ -194,7 +170,7 @@ const Functions: React.FC<{
                 >
                   <div className="grid place-items-center">
                     {FeatureToIcon({ feature: feature.wulkanowy })}
-                  </div>{" "}
+                  </div>
                 </td>
               </tr>
             ))}

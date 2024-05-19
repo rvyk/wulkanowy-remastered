@@ -23,27 +23,64 @@ const Downloads: React.FC<{
       title: string;
       number: number;
       github: string;
+      released?: string;
+      download?: string;
+      url?: string;
+      build?: number;
       avatar: string;
-      user: {
-        avatar_url: string;
-        login: string;
-        html_url: string;
-      };
+      user: string;
+      commit: string;
       id: number;
     }[]
   >([]);
 
   useEffect(() => {
-    fetch("https://api.github.com/repos/wulkanowy/wulkanowy/releases")
-      .then((res) => res.json())
-      .then((data) => setReleases(data));
+    const fetchData = async () => {
+      const response = await fetch(
+        "https://api.github.com/repos/wulkanowy/wulkanowy/pulls?state=open"
+      );
+      const data = await response.json();
+      const devReleases = await Promise.all(
+        data.map(async (release) => {
+          const redirectorUrl = `https://manager.wulkanowy.net.pl/v1/build/app/daeff1893f3c8128/branch/${release.head.ref}`;
+          const buildResponse = await fetch(redirectorUrl);
+          const build = await buildResponse.json();
+          if (!build.success) {
+            return {
+              title: release.title,
+              number: release.number,
+              github: release.html_url,
+              avatar: release.user.avatar_url,
+              user: release.user.login,
+              commit: release.head.sha,
+              id: release.id,
+            };
+          }
+          return {
+            title: release.title,
+            number: release.number,
+            github: release.html_url,
+            released: build.data.finished_at,
+            download: `https://manager.wulkanowy.net.pl/v1/download/app/daeff1893f3c8128/build/${build.data.build_slug}/artifact/${build.data.artifact_slug}`,
+            url: build.data.build_slug,
+            build: build.data.build_number,
+            avatar: release.user.avatar_url,
+            user: release.user.login,
+            commit: release.head.sha,
+            id: release.id,
+          };
+        })
+      );
+      setDevReleases(
+        devReleases.sort((a, b) => {
+          if (moment(a.released).isBefore(b.released)) return 1;
+          if (moment(a.released).isAfter(b.released)) return -1;
+          return 0;
+        })
+      );
+    };
 
-    fetch("https://api.github.com/repos/wulkanowy/wulkanowy/pulls?state=open")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setDevReleases(data);
-      });
+    fetchData();
   }, []);
 
   return (
@@ -74,9 +111,9 @@ const Downloads: React.FC<{
             >
               <div className="grid gap-4 mt-6">
                 {releases.map((release, i) => (
-                  <div>
+                  <div className="min-h-16">
                     <div key={i} className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-start gap-4">
                         <a
                           href={release.html_url}
                           target="_blank"
@@ -85,9 +122,7 @@ const Downloads: React.FC<{
                           <Github />
                         </a>
                         <div className="grid text-left">
-                          <h2 className="text-lg font-medium">
-                            Wersja {release.name}
-                          </h2>
+                          <h2 className="font-medium">Wersja {release.name}</h2>
                           <p className="text-sm">
                             {moment(release.published_at)
                               .locale("pl")
@@ -100,14 +135,14 @@ const Downloads: React.FC<{
                       </a>
                     </div>
                     {i == releases.length - 1 ? null : (
-                      <hr className="h-[2px] mt-2 bg-surfaceContainerHighest w-full border-none" />
+                      <hr className="h-[2px] mt-4 bg-surfaceContainerHighest w-full border-none" />
                     )}
                   </div>
                 ))}
-
-                <button className="px-6 py-3 w-fit mx-auto my-6 bg-primary hover:bg-onSecondaryContainer text-onPrimary transition-all font-medium rounded-button inline-flex gap-2">
+                {/* 
+                <button className="px-6 py-3 w-fit mx-auto my-4 bg-primary hover:bg-onSecondaryContainer text-onPrimary transition-all font-medium rounded-button inline-flex gap-2">
                   Wczytaj więcej
-                </button>
+                </button> */}
               </div>
             </TabsContent>
             <TabsContent
@@ -116,9 +151,9 @@ const Downloads: React.FC<{
             >
               <div className="grid gap-4 mt-6">
                 {devReleases.map((release, i) => (
-                  <div>
-                    <div key={i} className="flex  items-center justify-between">
-                      <div className="flex items-center gap-4">
+                  <div className="min-h-16">
+                    <div key={i} className="flex items-center justify-between">
+                      <div className="flex items-start gap-4">
                         <a
                           href={release.github}
                           target="_blank"
@@ -133,27 +168,32 @@ const Downloads: React.FC<{
                               #{release.number}
                             </span>
                           </h2>
-                          <a
-                            href={release.user.html_url}
-                            className="flex gap-2 items-center text-sm"
-                          >
-                            <img
-                              src={release.user.avatar_url}
-                              alt={release.user.login}
-                              className="w-4 h-4 rounded-full"
-                            />
-                            {release.user.login}
-                          </a>
-                          {/* <p className="text-sm">
-                          {moment(release.published_at)
-                            .locale("pl")
-                            .fromNow()}
-                        </p> */}
+                          <div className="flex gap-2">
+                            <p className="text-sm">
+                              {moment(release.released).locale("pl").fromNow()},
+                            </p>
+                            <a
+                              href={release.github}
+                              className="flex gap-2 w-fit items-center text-sm"
+                            >
+                              <img
+                                src={release.avatar}
+                                alt={release.user}
+                                className="w-5 h-5 rounded-3xl"
+                              />
+                              {release.user}
+                            </a>
+                          </div>
                         </div>
                       </div>
+                      {release.download && (
+                        <a href={release.download} target="_blank">
+                          <Download className="w-8 h-8" color="#FFB4A5" />
+                        </a>
+                      )}
                     </div>
                     {i == devReleases.length - 1 ? null : (
-                      <hr className="h-[2px] mt-2 bg-surfaceContainerHighest w-full border-none" />
+                      <hr className="h-[2px] mt-4 bg-surfaceContainerHighest w-full border-none" />
                     )}
                   </div>
                 ))}
