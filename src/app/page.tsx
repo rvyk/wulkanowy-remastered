@@ -41,7 +41,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-surface h-screen w-full">
+    <div className="min-h-screen w-full">
       <Message />
       <Navbar {...{ pathname, setPathname }} />
       <Hero {...{ sectionsRef }} />

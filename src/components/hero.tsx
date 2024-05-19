@@ -23,15 +23,15 @@ const Hero: React.FC<{
           sectionsRef.current?.push(el);
         }
       }}
-      className="relative h-full"
+      className="relative min-h-screen h-full"
     >
       <img
         src="/wulkanowy-logo-black.svg"
         className="w-full h-full absolute opacity-[0.01]"
         alt=""
       />
-      <div className="container max-xl:px-6 relative z-20 gap-24 xl:gap-48 flex max-lg:pt-16 flex-col lg:grid grid-cols-2 items-center h-full">
-        <div className="grid gap-8 h-fit justify-start xl:justify-end">
+      <div className="container px-6 z-20 gap-24 flex max-lg:pt-16 flex-col lg:grid grid-cols-2 items-center justify-center min-h-screen">
+        <div className="grid gap-8 h-fit">
           {latestVersion && (
             <p
               data-aos="fade-right"
@@ -45,7 +45,7 @@ const Hero: React.FC<{
             <h1
               data-aos="fade-right"
               data-aos-delay="200"
-              className="text-5xl font-semibold text-onSurface"
+              className="text-5xl font-semibold text-onSurface lg:whitespace-nowrap"
             >
               Wulkanowy{" "}
               <span className="text-onSurfaceVariant font-bold">
@@ -83,9 +83,9 @@ const Hero: React.FC<{
             </div>
           </div>
         </div>
-        <div className="grid justify-end xl:justify-center">
-          <div data-aos="fade-left" data-aos-delay="600">
-            <div className="relative float border-onSurface dark:border-onSurface bg-onSurface border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
+        <div className="grid justify-end">
+          <div data-aos="fade-up" data-aos-delay="600">
+            <div className="relative float border-onSurface dark:border-onSurface bg-onSurface border-[14px] rounded-[2.5rem] h-[600px] max-w-[300px]">
               <div className="h-[32px] w-[3px] bg-onSurface dark:bg-onSurface absolute -start-[17px] top-[72px] rounded-s-lg"></div>
               <div className="h-[46px] w-[3px] bg-onSurface dark:bg-onSurface absolute -start-[17px] top-[124px] rounded-s-lg"></div>
               <div className="h-[46px] w-[3px] bg-onSurface dark:bg-onSurface absolute -start-[17px] top-[178px] rounded-s-lg"></div>

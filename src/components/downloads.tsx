@@ -204,7 +204,6 @@ const Downloads: React.FC<{
             sectionsRef.current?.push(el);
           }
         }}
-        className="max-lg:pt-80 bg-primary"
       >
         <div className="w-full max-lg:px-6 relative py-24 bg-primary flex justify-center items-center flex-col">
           <h2
