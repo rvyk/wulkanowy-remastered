@@ -1,9 +1,16 @@
 import { Download, MessageCircleQuestion } from "lucide-react";
+import { useEffect, useState } from "react";
 import Wave from "react-wavify";
 
 const Hero: React.FC<{
   sectionsRef: React.MutableRefObject<HTMLDivElement[] | null>;
 }> = ({ sectionsRef }) => {
+  const [latestVersion, setLatestVersion] = useState<string | null>(null);
+  useEffect(() => {
+    fetch("https://api.github.com/repos/wulkanowy/wulkanowy/releases/latest")
+      .then((res) => res.json())
+      .then((data) => setLatestVersion(data.tag_name));
+  });
   return (
     <div
       id="top"
@@ -21,7 +28,8 @@ const Hero: React.FC<{
             data-aos="fade-right"
             className="font-medium bg-primary text-onPrimary rounded-3xl py-3 px-6 w-fit"
           >
-            Najnowsza wersja to <span className="font-semibold">2.6.1</span>!
+            Najnowsza wersja to{" "}
+            <span className="font-semibold">{latestVersion}</span>!
           </p>
           <div className="grid gap-4">
             <h1
