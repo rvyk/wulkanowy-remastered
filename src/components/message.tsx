@@ -50,7 +50,7 @@ const Message: React.FC = () => {
       data-aos-delay="1000"
       data-aos-once="true"
       data-aos-offset="-500"
-      className="flex justify-center duration-500 items-center fixed lg:bottom-6 z-50 w-full max-lg:px-6"
+      className="flex justify-center duration-500 items-center fixed max-lg:top-6 lg:bottom-6 z-50 w-full max-lg:px-6"
     >
       <div className="relative bg-secondaryFixed text-onSecondaryFixed max-w-7xl text-center font-medium min-h-20 rounded-3xl flex items-center px-24">
         <a

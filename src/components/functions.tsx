@@ -110,76 +110,82 @@ const Functions: React.FC<{
           sectionsRef.current?.push(el);
         }
       }}
-      className="py-48 -mt-24 bg-surface"
+      className="py-48 -mt-24 bg-surface "
     >
-      <div className="container">
+      <div className="container overflow-hidden px-6">
         <h2
           data-aos="fade-right"
-          className="text-4xl font-semibold text-onSurface pb-12"
+          className="text-4xl font-semibold text-center text-onSurface pb-12"
         >
           Porównaj funkcje różnych aplikacji
         </h2>
-        <table data-aos="fade-up" data-aos-delay="200" className="w-full">
-          <thead className="">
-            <tr className="">
-              <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg rounded-tl-3xl">
-                Funkcja
-              </th>
-              <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg">
-                Strona UONET+
-              </th>
-              <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg">
-                Dzienniczek VULCAN
-              </th>
-              <th className="bg-surfaceContainerLow text-onSurfaceVariant  px-6 py-6 text-lg rounded-tr-3xl">
-                Wulkanowy
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {features.map((feature, index) => (
-              <tr
-                key={index}
-                className={`${
-                  index % 2 == 0
-                    ? "bg-surfaceVariant"
-                    : "bg-surfaceContainerHighest"
-                } px-6 py-3 text-onBackground text-center`}
-              >
-                <td
-                  className={`${
-                    index == features.length - 1 && "rounded-bl-3xl"
-                  } text-center font-medium py-5`}
-                >
-                  {feature.feature}
-                </td>
-                <td className="text-center font-medium py-5">
-                  <div className="grid place-items-center">
-                    {FeatureToIcon({ feature: feature.uonet })}
-                  </div>
-                </td>
-                <td className="text-center font-medium py-5">
-                  <div className="grid place-items-center">
-                    {FeatureToIcon({ feature: feature.vulcan })}
-                  </div>
-                </td>
-                <td
-                  className={`${
-                    index % 2 != 0
-                      ? "bg-surfaceContainerLow"
-                      : "bg-surfaceContainerHigh"
-                  } ${
-                    index == features.length - 1 && "rounded-br-3xl"
-                  } text-center font-medium py-5 `}
-                >
-                  <div className="grid place-items-center">
-                    {FeatureToIcon({ feature: feature.wulkanowy })}
-                  </div>
-                </td>
+        <div
+          data-aos="fade-up"
+          data-aos-delay="200"
+          className="w-full max-lg:overflow-x-scroll"
+        >
+          <table className="w-full">
+            <thead className="">
+              <tr className="">
+                <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg rounded-tl-3xl">
+                  Funkcja
+                </th>
+                <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg">
+                  Strona UONET+
+                </th>
+                <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg">
+                  Dzienniczek VULCAN
+                </th>
+                <th className="bg-surfaceContainerLow text-onSurfaceVariant  px-6 py-6 text-lg rounded-tr-3xl">
+                  Wulkanowy
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {features.map((feature, index) => (
+                <tr
+                  key={index}
+                  className={`${
+                    index % 2 == 0
+                      ? "bg-surfaceVariant"
+                      : "bg-surfaceContainerHighest"
+                  } px-6 py-3 text-onBackground text-center`}
+                >
+                  <td
+                    className={`${
+                      index == features.length - 1 && "rounded-bl-3xl"
+                    } text-center font-medium px-5 py-5`}
+                  >
+                    {feature.feature}
+                  </td>
+                  <td className="text-center font-medium py-5 px-5">
+                    <div className="grid place-items-center">
+                      {FeatureToIcon({ feature: feature.uonet })}
+                    </div>
+                  </td>
+                  <td className="text-center font-medium py-5 px-5">
+                    <div className="grid place-items-center">
+                      {FeatureToIcon({ feature: feature.vulcan })}
+                    </div>
+                  </td>
+                  <td
+                    className={`${
+                      index % 2 != 0
+                        ? "bg-surfaceContainerLow"
+                        : "bg-surfaceContainerHigh"
+                    } ${
+                      index == features.length - 1 && "rounded-br-3xl"
+                    } text-center font-medium py-5 px-5`}
+                  >
+                    <div className="grid place-items-center">
+                      {FeatureToIcon({ feature: feature.wulkanowy })}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

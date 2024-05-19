@@ -8,6 +8,10 @@
   html {
     @apply scroll-smooth scroll-p-24;
   }
+
+  body {
+    @apply overflow-x-hidden;
+  }
 }
 
 ::-webkit-scrollbar {

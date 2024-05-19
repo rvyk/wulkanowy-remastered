@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Download, MessageCircleQuestion } from "lucide-react";
 import { LegacyRef, useEffect, useState } from "react";
 import Wave from "react-wavify";
@@ -12,7 +13,8 @@ const Hero: React.FC<{
     fetch("https://api.github.com/repos/wulkanowy/wulkanowy/releases/latest")
       .then((res) => res.json())
       .then((data) => setLatestVersion(data.tag_name));
-  });
+  }, []);
+
   return (
     <div
       id="top"
@@ -28,16 +30,18 @@ const Hero: React.FC<{
         className="w-full h-full absolute opacity-[0.01]"
         alt=""
       />
-      <div className="container max-lg:px-6 relative z-20 gap-0 xl:gap-48 grid grid-cols-2 items-center h-full">
+      <div className="container max-xl:px-6 relative z-20 gap-24 xl:gap-48 flex max-lg:pt-16 flex-col lg:grid grid-cols-2 items-center h-full">
         <div className="grid gap-8 h-fit justify-start xl:justify-end">
-          <p
-            data-aos="fade-right"
-            className="font-medium bg-primary text-onPrimary rounded-3xl py-3 px-6 w-fit"
-          >
-            Najnowsza wersja to{" "}
-            <span className="font-semibold">{latestVersion}</span>!
-          </p>
-          <div className="grid gap-4">
+          {latestVersion && (
+            <p
+              data-aos="fade-right"
+              className="font-medium transition-all max-lg:mx-auto bg-primary text-onPrimary rounded-3xl py-3 px-6 w-fit"
+            >
+              Najnowsza wersja to{" "}
+              <span className="font-semibold">{latestVersion}</span>!
+            </p>
+          )}
+          <div className="grid gap-4 max-lg:text-center">
             <h1
               data-aos="fade-right"
               data-aos-delay="200"
@@ -60,16 +64,22 @@ const Hero: React.FC<{
               dla ucznia i rodzica
             </p>
           </div>
-          <div className="flex space-x-6">
+          <div className="flex gap-x-6 max-lg:gap-y-4 max-lg:items-center max-lg:flex-col">
             <div data-aos="fade-up" data-aos-delay="400">
-              <button className="px-6 py-3 font-medium bg-primary hover:bg-onSecondaryContainer transition-all text-onPrimary rounded-button inline-flex items-center gap-2">
+              <a
+                href="/#pobieranie"
+                className="px-6 py-3 font-medium bg-primary hover:bg-onSecondaryContainer transition-all text-onPrimary rounded-button inline-flex items-center gap-2"
+              >
                 <Download /> Pobierz
-              </button>
+              </a>
             </div>
             <div data-aos="fade-up" data-aos-delay="500">
-              <button className="px-6 py-3 font-medium hover:bg-primary hover:text-onPrimary hover:border-transparent transition-all border-outline border-2 text-onSecondaryContainer rounded-button items-center inline-flex gap-2">
+              <a
+                href="/#faq"
+                className="px-6 py-3 font-medium hover:bg-primary hover:text-onPrimary hover:border-transparent transition-all border-outline border-2 text-onSecondaryContainer rounded-button items-center inline-flex gap-2"
+              >
                 <MessageCircleQuestion /> Często zadawane pytania
-              </button>
+              </a>
             </div>
           </div>
         </div>

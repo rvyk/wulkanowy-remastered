@@ -40,7 +40,7 @@ const Navbar: React.FC<{
   }, [setPathname]);
 
   return (
-    <div className="flex justify-center items-center fixed top-0 z-50 w-full">
+    <div className="flex max-lg:hidden justify-center items-center fixed top-0 z-50 w-full">
       <div
         data-aos="fade-down"
         className="bg-surfaceContainer h-20 rounded-b-3xl flex items-center px-24"
