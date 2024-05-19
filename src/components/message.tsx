@@ -20,13 +20,16 @@ const Message: React.FC = () => {
     fetch("https://messages.wulkanowy.net.pl/v1.json").then((response) => {
       response.json().then((data: WulkanowyMessages[]) => {
         const filteredMessages = data.filter(
-          (message) => !message.targetFlavor
+          (message) =>
+            !message.targetFlavor &&
+            message.priority != "LOW" &&
+            message.messageTypes.includes("GENERAL_MESSAGE")
         );
         const firstMessage = filteredMessages[0];
 
         if (
           firstMessage &&
-          // !hiddenMessages.includes(firstMessage.id) &&
+          !hiddenMessages.includes(firstMessage.id) &&
           firstMessage.isVisible
         ) {
           setMessage(firstMessage);
