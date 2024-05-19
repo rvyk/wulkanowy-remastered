@@ -105,7 +105,11 @@ const Functions: React.FC<{
   return (
     <div
       id="porownanie"
-      ref={(el) => sectionsRef.current?.push(el!)}
+      ref={(el: HTMLDivElement | null) => {
+        if (el) {
+          sectionsRef.current?.push(el);
+        }
+      }}
       className="py-48 -mt-24 bg-surface"
     >
       <div className="container">

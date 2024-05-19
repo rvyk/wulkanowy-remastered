@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import Downloads from "./components/downloads";
-import Functions from "./components/functions";
-import Hero from "./components/hero";
-import Message from "./components/message";
-import Navbar from "./components/navbar";
+"use client";
 
-function App() {
+import Downloads from "@/components/downloads";
+import Functions from "@/components/functions";
+import Hero from "@/components/hero";
+import Message from "@/components/message";
+import Navbar from "@/components/navbar";
+import { useEffect, useRef, useState } from "react";
+
+export default function Home() {
   const [pathname, setPathname] = useState("");
   const sectionsRef = useRef([]);
 
@@ -30,6 +32,7 @@ function App() {
 
     return () => {
       if (sectionsRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         sectionsRef.current.forEach((section) => {
           if (section) observer.unobserve(section);
         });
@@ -47,5 +50,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

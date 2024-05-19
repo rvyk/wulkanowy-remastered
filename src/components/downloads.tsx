@@ -95,9 +95,9 @@ const Downloads: React.FC<{
               className="max-h-96 overflow-y-scroll pr-6"
             >
               <div className="grid gap-4 mt-6">
-                {releases.map((release, i) => (
-                  <div className="min-h-16">
-                    <div key={i} className="flex items-center justify-between">
+                {releases.map((release, index) => (
+                  <div key={index} className="min-h-16">
+                    <div className="flex items-center justify-between">
                       <div className="flex items-start gap-4">
                         <a
                           href={release.html_url}
@@ -119,7 +119,7 @@ const Downloads: React.FC<{
                         <Download className="w-8 h-8" color="#FFB4A5" />
                       </a>
                     </div>
-                    {i == releases.length - 1 ? null : (
+                    {index == releases.length - 1 ? null : (
                       <hr className="h-[2px] mt-4 bg-surfaceContainerHighest w-full border-none" />
                     )}
                   </div>
@@ -135,9 +135,9 @@ const Downloads: React.FC<{
               className="max-h-96 overflow-y-scroll pr-6"
             >
               <div className="grid gap-4 mt-6">
-                {devReleases.map((release, i) => (
-                  <div className="min-h-16">
-                    <div key={i} className="flex items-center justify-between">
+                {devReleases.map((release, index) => (
+                  <div key={index} className="min-h-16">
+                    <div className="flex items-center justify-between">
                       <div className="flex items-start gap-4">
                         <a
                           href={release.github}
@@ -177,7 +177,7 @@ const Downloads: React.FC<{
                         </a>
                       )}
                     </div>
-                    {i == devReleases.length - 1 ? null : (
+                    {index == devReleases.length - 1 ? null : (
                       <hr className="h-[2px] mt-4 bg-surfaceContainerHighest w-full border-none" />
                     )}
                   </div>
@@ -187,7 +187,14 @@ const Downloads: React.FC<{
           </Tabs>
         </DialogContent>
       </Dialog>
-      <div id="pobieranie" ref={(el) => sectionsRef.current?.push(el!)}>
+      <div
+        id="pobieranie"
+        ref={(el: HTMLDivElement | null) => {
+          if (el) {
+            sectionsRef.current?.push(el);
+          }
+        }}
+      >
         <div className="w-full relative py-24 bg-primary flex justify-center items-center flex-col">
           <h2
             data-aos="fade-up"

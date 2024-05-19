@@ -1,5 +1,7 @@
+"use client";
+
 import { Download, MessageCircleQuestion } from "lucide-react";
-import { useEffect, useState } from "react";
+import { LegacyRef, useEffect, useState } from "react";
 import Wave from "react-wavify";
 
 const Hero: React.FC<{
@@ -14,7 +16,11 @@ const Hero: React.FC<{
   return (
     <div
       id="top"
-      ref={(el) => sectionsRef.current?.push(el!)}
+      ref={(el: HTMLDivElement | null) => {
+        if (el) {
+          sectionsRef.current?.push(el);
+        }
+      }}
       className="relative h-full"
     >
       <img
@@ -22,8 +28,8 @@ const Hero: React.FC<{
         className="w-full h-full absolute opacity-[0.01]"
         alt=""
       />
-      <div className="container relative z-20 gap-48 grid grid-cols-2 items-center h-full">
-        <div className="grid gap-8 h-fit justify-end">
+      <div className="container max-lg:px-6 relative z-20 gap-0 xl:gap-48 grid grid-cols-2 items-center h-full">
+        <div className="grid gap-8 h-fit justify-start xl:justify-end">
           <p
             data-aos="fade-right"
             className="font-medium bg-primary text-onPrimary rounded-3xl py-3 px-6 w-fit"
@@ -67,7 +73,7 @@ const Hero: React.FC<{
             </div>
           </div>
         </div>
-        <div className="grid justify-center">
+        <div className="grid justify-end xl:justify-center">
           <div data-aos="fade-left" data-aos-delay="600">
             <div className="relative float border-onSurface dark:border-onSurface bg-onSurface border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
               <div className="h-[32px] w-[3px] bg-onSurface dark:bg-onSurface absolute -start-[17px] top-[72px] rounded-s-lg"></div>
