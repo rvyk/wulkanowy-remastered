@@ -1,10 +1,12 @@
-import { Download, Github } from "lucide-react";
-import { useEffect, useState } from "react";
+import { CircleOff, Download, Github } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import Wave from "react-wavify";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import moment from "moment";
 import { DevRelease, Release, RemoteDevRelease } from "@/types/github";
+import useBetterMediaQuery from "@/hooks/use-media-query";
+import { Drawer, DrawerContent } from "./ui/drawer";
 
 const Downloads: React.FC<{
   sectionsRef: React.MutableRefObject<HTMLDivElement[] | null>;
@@ -12,6 +14,7 @@ const Downloads: React.FC<{
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [releases, setReleases] = useState<Release[]>([]);
   const [devReleases, setDevReleases] = useState<DevRelease[]>([]);
+  const isDesktop = useBetterMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,130 +76,19 @@ const Downloads: React.FC<{
 
   return (
     <div>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="bg-surfaceContainerHigh p-6 pr-0 rounded-3xl text-onSurface">
-          <Tabs defaultValue="stab">
-            <TabsList className="mx-auto w-full justify-center items-center flex">
-              <TabsTrigger
-                value="stab"
-                className="data-[state=inactive]:text-onSurfaceVariant flex-col data-[state=active]:text-primary group"
-              >
-                Wersje stabilne
-                <div className="h-1 mt-2 rounded-t-button w-full bg-primary group-data-[state=active]:opacity-100 group-data-[state=inactive]:opacity-0 transition-all"></div>
-              </TabsTrigger>
-              <TabsTrigger
-                value="dev"
-                className="data-[state=inactive]:text-onSurfaceVariant flex-col data-[state=active]:text-primary group"
-              >
-                Wersje deweloperskie
-                <div className="h-1 mt-2 rounded-t-button w-full bg-primary group-data-[state=active]:opacity-100 group-data-[state=inactive]:opacity-0 transition-all"></div>
-              </TabsTrigger>
-            </TabsList>
-            <hr className="h-1 bg-surfaceContainerHighest w-full -mt-1 border-none" />
-            <TabsContent
-              value="stab"
-              className="max-h-96 overflow-y-scroll pr-6"
-            >
-              <div className="grid gap-4 mt-6">
-                {releases.length > 0 &&
-                  releases?.map((release, index) => (
-                    <div key={index} className="min-h-16">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-start gap-4">
-                          <a
-                            href={release.html_url}
-                            target="_blank"
-                            className="px-4 hover:bg-onSecondaryContainer py-3 bg-primary text-onPrimary transition-all font-medium rounded-button inline-flex gap-2"
-                          >
-                            <Github />
-                          </a>
-                          <div className="grid text-left">
-                            <h2 className="font-medium">
-                              Wersja {release.name}
-                            </h2>
-                            <p className="text-sm">
-                              {moment(release.published_at)
-                                .locale("pl")
-                                .fromNow()}
-                            </p>
-                          </div>
-                        </div>
-                        <a href={release.assets[0].browser_download_url}>
-                          <Download className="w-8 h-8" color="#FFB4A5" />
-                        </a>
-                      </div>
-                      {index == releases.length - 1 ? null : (
-                        <hr className="h-[2px] mt-4 bg-surfaceContainerHighest w-full border-none" />
-                      )}
-                    </div>
-                  ))}
-                {/* 
-                <button className="px-6 py-3 w-fit mx-auto my-4 bg-primary hover:bg-onSecondaryContainer text-onPrimary transition-all font-medium rounded-button inline-flex gap-2">
-                  Wczytaj więcej
-                </button> */}
-              </div>
-            </TabsContent>
-            <TabsContent
-              value="dev"
-              className="max-h-96 overflow-y-scroll pr-6"
-            >
-              <div className="grid gap-4 mt-6">
-                {devReleases.length > 0 &&
-                  devReleases?.map((release, index) => (
-                    <div key={index} className="min-h-16">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-start gap-4">
-                          <a
-                            href={release.github}
-                            target="_blank"
-                            className="px-4 hover:bg-onSecondaryContainer py-3 bg-primary text-onPrimary transition-all font-medium rounded-button inline-flex gap-2"
-                          >
-                            <Github />
-                          </a>
-                          <div className="grid text-left">
-                            <h2 className="font-medium">
-                              {release.title}{" "}
-                              <span className="font-normal text-onSurfaceVariant">
-                                #{release.number}
-                              </span>
-                            </h2>
-                            <div className="flex gap-2">
-                              <p className="text-sm">
-                                {moment(release.released)
-                                  .locale("pl")
-                                  .fromNow()}
-                                ,
-                              </p>
-                              <a
-                                href={release.github}
-                                className="flex gap-2 w-fit items-center text-sm"
-                              >
-                                <img
-                                  src={release.avatar}
-                                  alt={release.user}
-                                  className="w-5 h-5 rounded-3xl"
-                                />
-                                {release.user}
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        {release.download && (
-                          <a href={release.download} target="_blank">
-                            <Download className="w-8 h-8" color="#FFB4A5" />
-                          </a>
-                        )}
-                      </div>
-                      {index == devReleases.length - 1 ? null : (
-                        <hr className="h-[2px] mt-4 bg-surfaceContainerHighest w-full border-none" />
-                      )}
-                    </div>
-                  ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </DialogContent>
-      </Dialog>
+      {isDesktop ? (
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent className="bg-surfaceContainerHigh p-6 pr-0 rounded-3xl text-onSurface">
+            <Content {...{ releases, devReleases }} />
+          </DialogContent>
+        </Dialog>
+      ) : (
+        <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DrawerContent className="bg-surfaceContainerHigh rounded-3xl text-onSurface">
+            <Content {...{ releases, devReleases }} />
+          </DrawerContent>
+        </Drawer>
+      )}
       <div
         id="pobieranie"
         ref={(el: HTMLDivElement | null) => {
@@ -291,6 +183,133 @@ const Downloads: React.FC<{
         />
       </div>
     </div>
+  );
+};
+
+const Content: React.FC<{ releases: Release[]; devReleases: DevRelease[] }> = ({
+  releases,
+  devReleases,
+}) => {
+  return (
+    <Tabs defaultValue="stab">
+      <TabsList className="mx-auto w-full justify-center items-center flex">
+        <TabsTrigger
+          value="stab"
+          className="data-[state=inactive]:text-onSurfaceVariant flex-col data-[state=active]:text-primary group"
+        >
+          Wersje stabilne
+          <div className="h-1 mt-2 rounded-t-button w-full bg-primary group-data-[state=active]:opacity-100 group-data-[state=inactive]:opacity-0 transition-all"></div>
+        </TabsTrigger>
+        <TabsTrigger
+          value="dev"
+          className="data-[state=inactive]:text-onSurfaceVariant flex-col data-[state=active]:text-primary group"
+        >
+          Wersje deweloperskie
+          <div className="h-1 mt-2 rounded-t-button w-full bg-primary group-data-[state=active]:opacity-100 group-data-[state=inactive]:opacity-0 transition-all"></div>
+        </TabsTrigger>
+      </TabsList>
+      <hr className="h-1 bg-surfaceContainerHighest w-full -mt-1 border-none" />
+      <TabsContent value="stab" className="max-h-96 overflow-y-scroll pr-6">
+        <div className="grid gap-4 mt-6">
+          {releases.length > 0 ? (
+            releases?.map((release, index) => (
+              <div key={index} className="min-h-16">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-start gap-4">
+                    <a
+                      href={release.html_url}
+                      target="_blank"
+                      className="px-4 hover:bg-onSecondaryContainer py-3 bg-primary text-onPrimary transition-all font-medium rounded-button inline-flex gap-2"
+                    >
+                      <Github />
+                    </a>
+                    <div className="grid text-left">
+                      <h2 className="font-medium">Wersja {release.name}</h2>
+                      <p className="text-sm">
+                        {moment(release.published_at).locale("pl").fromNow()}
+                      </p>
+                    </div>
+                  </div>
+                  <a href={release.assets[0].browser_download_url}>
+                    <Download className="w-8 h-8" color="#FFB4A5" />
+                  </a>
+                </div>
+                {index == releases.length - 1 ? null : (
+                  <hr className="h-[2px] mt-4 bg-surfaceContainerHighest w-full border-none" />
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="flex justify-center items-center gap-4 flex-col">
+              <CircleOff className="w-16 h-16" color="#FFB4A5" />
+              <p>Brak wersji stabilnych</p>
+            </div>
+          )}
+          {/* 
+        <button className="px-6 py-3 w-fit mx-auto my-4 bg-primary hover:bg-onSecondaryContainer text-onPrimary transition-all font-medium rounded-button inline-flex gap-2">
+          Wczytaj więcej
+        </button> */}
+        </div>
+      </TabsContent>
+      <TabsContent value="dev" className="max-h-96 overflow-y-scroll pr-6">
+        <div className="grid gap-4 mt-6">
+          {devReleases.length > 0 ? (
+            devReleases?.map((release, index) => (
+              <div key={index} className="min-h-16">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-start gap-4">
+                    <a
+                      href={release.github}
+                      target="_blank"
+                      className="px-4 hover:bg-onSecondaryContainer py-3 bg-primary text-onPrimary transition-all font-medium rounded-button inline-flex gap-2"
+                    >
+                      <Github />
+                    </a>
+                    <div className="grid text-left">
+                      <h2 className="font-medium">
+                        {release.title}{" "}
+                        <span className="font-normal text-onSurfaceVariant">
+                          #{release.number}
+                        </span>
+                      </h2>
+                      <div className="flex gap-2">
+                        <p className="text-sm">
+                          {moment(release.released).locale("pl").fromNow()},
+                        </p>
+                        <a
+                          href={release.github}
+                          className="flex gap-2 w-fit items-center text-sm"
+                        >
+                          <img
+                            src={release.avatar}
+                            alt={release.user}
+                            className="w-5 h-5 rounded-3xl"
+                          />
+                          {release.user}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  {release.download && (
+                    <a href={release.download} target="_blank">
+                      <Download className="w-8 h-8" color="#FFB4A5" />
+                    </a>
+                  )}
+                </div>
+                {index == devReleases.length - 1 ? null : (
+                  <hr className="h-[2px] mt-4 bg-surfaceContainerHighest w-full border-none" />
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="flex justify-center items-center gap-4 flex-col">
+              <CircleOff className="w-16 h-16" color="#FFB4A5" />
+              <p>Brak wersji deweloperskich</p>
+            </div>
+          )}
+        </div>
+      </TabsContent>
+    </Tabs>
   );
 };
 

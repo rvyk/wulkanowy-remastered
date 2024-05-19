@@ -50,9 +50,9 @@ const Message: React.FC = () => {
       data-aos-delay="1000"
       data-aos-once="true"
       data-aos-offset="-500"
-      className="flex justify-center relative items-center lg:fixed max-lg:top-6 lg:bottom-6 z-50 w-full max-lg:px-6"
+      className="flex justify-center relative items-center lg:fixed max-lg:top-6 lg:bottom-6 z-50 w-full px-6"
     >
-      <div className="relative bg-secondaryFixed text-onSecondaryFixed text-center font-medium min-h-20 rounded-3xl flex items-center lg:px-24">
+      <div className="relative bg-secondaryFixed text-onSecondaryFixed text-center font-medium min-h-20 rounded-3xl flex items-center lg:px-16">
         <a
           href={message.destinationUrl || ""}
           target="_blank"

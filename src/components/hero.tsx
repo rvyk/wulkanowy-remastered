@@ -76,7 +76,7 @@ const Hero: React.FC<{
             <div data-aos="fade-up" data-aos-delay="500">
               <a
                 href="/#faq"
-                className="px-6 py-3 font-medium hover:bg-primary hover:text-onPrimary hover:border-transparent transition-all border-outline border-2 text-onSecondaryContainer rounded-button items-center inline-flex gap-2"
+                className="px-6 py-3 font-medium hover:bg-primary hover:text-onPrimary hover:border-primary transition-all border-outline border-2 text-onSecondaryContainer rounded-button items-center inline-flex gap-2"
               >
                 <MessageCircleQuestion /> Często zadawane pytania
               </a>
