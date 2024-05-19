@@ -4,44 +4,29 @@ import Wave from "react-wavify";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import moment from "moment";
+import { DevRelease, Release, RemoteDevRelease } from "@/types/github";
 
 const Downloads: React.FC<{
   sectionsRef: React.MutableRefObject<HTMLDivElement[] | null>;
 }> = ({ sectionsRef }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [releases, setReleases] = useState<
-    {
-      html_url: string;
-      name: string;
-      published_at: string;
-      assets: { browser_download_url: string }[];
-    }[]
-  >([]);
+  const [releases, setReleases] = useState<Release[]>([]);
 
-  const [devReleases, setDevReleases] = useState<
-    {
-      title: string;
-      number: number;
-      github: string;
-      released?: string;
-      download?: string;
-      url?: string;
-      build?: number;
-      avatar: string;
-      user: string;
-      commit: string;
-      id: number;
-    }[]
-  >([]);
+  const [devReleases, setDevReleases] = useState<DevRelease[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      const releasesResponse = await fetch(
+        "https://api.github.com/repos/wulkanowy/wulkanowy/releases"
+      ).then((res) => res.json());
+      setReleases(releasesResponse);
+
       const response = await fetch(
         "https://api.github.com/repos/wulkanowy/wulkanowy/pulls?state=open"
       );
       const data = await response.json();
       const devReleases = await Promise.all(
-        data.map(async (release) => {
+        data.map(async (release: RemoteDevRelease) => {
           const redirectorUrl = `https://manager.wulkanowy.net.pl/v1/build/app/daeff1893f3c8128/branch/${release.head.ref}`;
           const buildResponse = await fetch(redirectorUrl);
           const build = await buildResponse.json();
