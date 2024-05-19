@@ -20,7 +20,6 @@ function App() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setPathname(window.location.pathname + "#" + entry.target.id);
-          window.history.replaceState(null, "", "#" + entry.target.id);
         }
       });
     }, options);

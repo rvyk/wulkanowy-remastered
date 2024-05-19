@@ -1,4 +1,4 @@
-import { CheckIcon, Minus, X } from "lucide-react";
+import { CheckIcon, X } from "lucide-react";
 
 const features = [
   {
@@ -161,7 +161,11 @@ const Functions: React.FC<{
                     : "bg-surfaceContainerHighest"
                 } px-6 py-3 text-onBackground text-center`}
               >
-                <td className="text-center font-medium py-5 last:rounded-bl-3xl">
+                <td
+                  className={`${
+                    index == features.length - 1 && "rounded-bl-3xl"
+                  } text-center font-medium py-5`}
+                >
                   {feature.feature}
                 </td>
                 <td className="text-center font-medium py-5">
@@ -184,6 +188,8 @@ const Functions: React.FC<{
                     index % 2 != 0
                       ? "bg-surfaceContainerLow"
                       : "bg-surfaceContainerHigh"
+                  } ${
+                    index == features.length - 1 && "rounded-br-3xl"
                   } text-center font-medium py-5 `}
                 >
                   <div className="grid place-items-center">
@@ -205,8 +211,6 @@ const FeatureToIcon = ({ feature }: { feature: string }) => {
       return <CheckIcon />;
     case "Nie dostępne":
       return <X />;
-    case "Częściowa obsługa":
-      return <Minus />;
     default:
       return <p>{feature}</p>;
   }

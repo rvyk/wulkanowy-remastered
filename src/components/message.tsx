@@ -9,7 +9,11 @@ const Message: React.FC = () => {
   useEffect(() => {
     fetch("https://messages.wulkanowy.net.pl/v1.json").then((response) => {
       response.json().then((data) => {
-        if (hiddenMessages.includes(data[0].id)) return;
+        if (
+          hiddenMessages.includes(data[0].id) ||
+          !data[0].messageTypes.includes("GENERAL_MESSAGE")
+        )
+          return;
 
         setMessage(data[0]);
       });
@@ -36,7 +40,7 @@ const Message: React.FC = () => {
       data-aos-offset="-500"
       className="flex justify-center duration-500 items-center fixed bottom-6 z-50 w-full"
     >
-      <div className="bg-secondaryFixed relative text-onSecondaryFixed max-w-7xl text-center font-medium h-20 rounded-3xl flex items-center px-24">
+      <div className="bg-secondaryFixed relative text-onSecondaryFixed max-w-7xl text-center font-medium min-h-20 rounded-3xl flex items-center px-24">
         <p>{message.content}</p>
         <button onClick={handleClose} className="absolute right-8">
           <X />

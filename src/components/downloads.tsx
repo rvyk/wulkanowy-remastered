@@ -1,84 +1,253 @@
-import { Download } from "lucide-react";
+import { Download, Github } from "lucide-react";
+import { useEffect, useState } from "react";
 import Wave from "react-wavify";
+import { Dialog, DialogContent } from "./ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import moment from "moment";
 
 const Downloads: React.FC<{
   sectionsRef: React.MutableRefObject<HTMLDivElement[] | null>;
 }> = ({ sectionsRef }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [releases, setReleases] = useState<
+    {
+      html_url: string;
+      name: string;
+      published_at: string;
+      assets: { browser_download_url: string }[];
+    }[]
+  >([]);
+
+  const [devReleases, setDevReleases] = useState<
+    {
+      title: string;
+      number: number;
+      github: string;
+      avatar: string;
+      user: {
+        avatar_url: string;
+        login: string;
+        html_url: string;
+      };
+      id: number;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    fetch("https://api.github.com/repos/wulkanowy/wulkanowy/releases")
+      .then((res) => res.json())
+      .then((data) => setReleases(data));
+
+    fetch("https://api.github.com/repos/wulkanowy/wulkanowy/pulls?state=open")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setDevReleases(data);
+      });
+  }, []);
+
   return (
-    <div id="pobieranie" ref={(el) => sectionsRef.current?.push(el!)}>
-      <div className="w-full relative py-24 bg-primary flex justify-center items-center flex-col">
-        <h2
-          data-aos="fade-up"
-          className="text-4xl font-semibold text-onPrimary pb-12"
-        >
-          Pobierz aplikację
-        </h2>
-        <div className="flex gap-8">
-          <button
+    <div>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="bg-surfaceContainerHigh p-6 pr-0 rounded-3xl text-onSurface">
+          <Tabs defaultValue="stab">
+            <TabsList className="mx-auto w-full justify-center items-center flex">
+              <TabsTrigger
+                value="stab"
+                className="data-[state=inactive]:text-onSurfaceVariant flex-col data-[state=active]:text-primary group"
+              >
+                Wersje stabilne
+                <div className="h-1 mt-2 rounded-t-button w-full bg-primary group-data-[state=active]:opacity-100 group-data-[state=inactive]:opacity-0 transition-all"></div>
+              </TabsTrigger>
+              <TabsTrigger
+                value="dev"
+                className="data-[state=inactive]:text-onSurfaceVariant flex-col data-[state=active]:text-primary group"
+              >
+                Wersje deweloperskie
+                <div className="h-1 mt-2 rounded-t-button w-full bg-primary group-data-[state=active]:opacity-100 group-data-[state=inactive]:opacity-0 transition-all"></div>
+              </TabsTrigger>
+            </TabsList>
+            <hr className="h-1 bg-surfaceContainerHighest w-full -mt-1 border-none" />
+            <TabsContent
+              value="stab"
+              className="max-h-96 overflow-y-scroll pr-6"
+            >
+              <div className="grid gap-4 mt-6">
+                {releases.map((release, i) => (
+                  <div>
+                    <div key={i} className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <a
+                          href={release.html_url}
+                          target="_blank"
+                          className="px-4 hover:bg-onSecondaryContainer py-3 bg-primary text-onPrimary transition-all font-medium rounded-button inline-flex gap-2"
+                        >
+                          <Github />
+                        </a>
+                        <div className="grid text-left">
+                          <h2 className="text-lg font-medium">
+                            Wersja {release.name}
+                          </h2>
+                          <p className="text-sm">
+                            {moment(release.published_at)
+                              .locale("pl")
+                              .fromNow()}
+                          </p>
+                        </div>
+                      </div>
+                      <a href={release.assets[0].browser_download_url}>
+                        <Download className="w-8 h-8" color="#FFB4A5" />
+                      </a>
+                    </div>
+                    {i == releases.length - 1 ? null : (
+                      <hr className="h-[2px] mt-2 bg-surfaceContainerHighest w-full border-none" />
+                    )}
+                  </div>
+                ))}
+
+                <button className="px-6 py-3 w-fit mx-auto my-6 bg-primary hover:bg-onSecondaryContainer text-onPrimary transition-all font-medium rounded-button inline-flex gap-2">
+                  Wczytaj więcej
+                </button>
+              </div>
+            </TabsContent>
+            <TabsContent
+              value="dev"
+              className="max-h-96 overflow-y-scroll pr-6"
+            >
+              <div className="grid gap-4 mt-6">
+                {devReleases.map((release, i) => (
+                  <div>
+                    <div key={i} className="flex  items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <a
+                          href={release.github}
+                          target="_blank"
+                          className="px-4 hover:bg-onSecondaryContainer py-3 bg-primary text-onPrimary transition-all font-medium rounded-button inline-flex gap-2"
+                        >
+                          <Github />
+                        </a>
+                        <div className="grid text-left">
+                          <h2 className="font-medium">
+                            {release.title}{" "}
+                            <span className="font-normal text-onSurfaceVariant">
+                              #{release.number}
+                            </span>
+                          </h2>
+                          <a
+                            href={release.user.html_url}
+                            className="flex gap-2 items-center text-sm"
+                          >
+                            <img
+                              src={release.user.avatar_url}
+                              alt={release.user.login}
+                              className="w-4 h-4 rounded-full"
+                            />
+                            {release.user.login}
+                          </a>
+                          {/* <p className="text-sm">
+                          {moment(release.published_at)
+                            .locale("pl")
+                            .fromNow()}
+                        </p> */}
+                        </div>
+                      </div>
+                    </div>
+                    {i == devReleases.length - 1 ? null : (
+                      <hr className="h-[2px] mt-2 bg-surfaceContainerHighest w-full border-none" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </DialogContent>
+      </Dialog>
+      <div id="pobieranie" ref={(el) => sectionsRef.current?.push(el!)}>
+        <div className="w-full relative py-24 bg-primary flex justify-center items-center flex-col">
+          <h2
             data-aos="fade-up"
-            data-aos-delay="200"
-            className="relative bg-background hover:bg-surfaceContainerHigh transition-colors px-6 py-3 rounded-button"
+            className="text-4xl font-semibold text-onPrimary pb-12"
           >
-            <div className="flex gap-4 items-center">
-              <img
-                src="/playstore-svgrepo-com.svg"
-                alt=""
-                className="w-8 h-8"
-              />
-              <div className="grid text-left text-onSecondaryContainer">
-                <p className="text-sm">POBIERZ Z</p>
-                <h2 className="text-xl font-medium">Google Play</h2>
+            Pobierz aplikację
+          </h2>
+          <div className="flex gap-8">
+            <a
+              href="https://play.google.com/store/apps/details?id=io.github.wulkanowy&utm_source=homepage"
+              target="_blank"
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="relative bg-background hover:bg-surfaceContainerHigh transition-colors px-6 py-3 rounded-button"
+            >
+              <div className="flex gap-4 items-center">
+                <img
+                  src="/playstore-svgrepo-com.svg"
+                  alt=""
+                  className="w-8 h-8"
+                />
+                <div className="grid text-left text-onSecondaryContainer">
+                  <p className="text-sm">POBIERZ Z</p>
+                  <h2 className="text-xl font-medium">Google Play</h2>
+                </div>
               </div>
-            </div>
-          </button>
-          <button
-            data-aos="fade-up"
-            data-aos-delay="300"
-            className="relative bg-background hover:bg-surfaceContainerHigh transition-colors px-6 py-3 rounded-button"
-          >
-            <div className="flex gap-4 items-center">
-              <img src="/Huawei_AppGallery.svg" alt="" className="w-8 h-8" />
-              <div className="grid text-left text-onSecondaryContainer">
-                <p className="text-sm">POBIERZ Z</p>
-                <h2 className="text-xl font-medium">AppGallery</h2>
+            </a>
+            <a
+              href="https://appgallery.huawei.com/#/app/C101440411"
+              target="_blank"
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="relative bg-background hover:bg-surfaceContainerHigh transition-colors px-6 py-3 rounded-button"
+            >
+              <div className="flex gap-4 items-center">
+                <img src="/Huawei_AppGallery.svg" alt="" className="w-8 h-8" />
+                <div className="grid text-left text-onSecondaryContainer">
+                  <p className="text-sm">POBIERZ Z</p>
+                  <h2 className="text-xl font-medium">AppGallery</h2>
+                </div>
               </div>
-            </div>
-          </button>
-          <button className="relative bg-background hover:bg-surfaceContainerHigh transition-colors px-6 py-3 rounded-button">
-            <div className="flex gap-4 items-center">
-              <img src="/F-Droid_Logo_4.svg" alt="" className="w-8 h-8" />
-              <div className="grid text-left text-onSecondaryContainer">
-                <p className="text-sm">POBIERZ Z</p>
-                <h2 className="text-xl font-medium">F-Droid</h2>
+            </a>
+            <a
+              href="https://f-droid.org/packages/io.github.wulkanowy/"
+              target="_blank"
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className="relative bg-background hover:bg-surfaceContainerHigh transition-colors px-6 py-3 rounded-button"
+            >
+              <div className="flex gap-4 items-center">
+                <img src="/F-Droid_Logo_4.svg" alt="" className="w-8 h-8" />
+                <div className="grid text-left text-onSecondaryContainer">
+                  <p className="text-sm">POBIERZ Z</p>
+                  <h2 className="text-xl font-medium">F-Droid</h2>
+                </div>
               </div>
-            </div>
-          </button>
-          <button
-            data-aos="fade-up"
-            data-aos-delay="500"
-            className="relative bg-background hover:bg-surfaceContainerHigh transition-colors px-6 py-3 rounded-button"
-          >
-            <div className="flex gap-4 items-center">
-              <Download className="w-8 h-8" color="#FFB4A5" />
-              <div className="grid text-left text-onSecondaryContainer">
-                <p className="text-sm">POBIERZ Z</p>
-                <h2 className="text-xl font-medium">Inne opcje</h2>
+            </a>
+            <button
+              onClick={() => setIsDialogOpen(true)}
+              data-aos="fade-up"
+              data-aos-delay="500"
+              className="relative bg-background hover:bg-surfaceContainerHigh transition-colors px-6 py-3 rounded-button"
+            >
+              <div className="flex gap-4 items-center">
+                <Download className="w-8 h-8" color="#FFB4A5" />
+                <div className="grid text-left text-onSecondaryContainer">
+                  <p className="text-sm">POBIERZ Z</p>
+                  <h2 className="text-xl font-medium">Inne opcje</h2>
+                </div>
               </div>
-            </div>
-          </button>
+            </button>
+          </div>
         </div>
+        <Wave
+          fill="#FFB4A5"
+          paused={false}
+          className="w-full z-10 rotate-180"
+          options={{
+            height: 20,
+            amplitude: 50,
+            speed: 0.15,
+            points: 6,
+          }}
+        />
       </div>
-      <Wave
-        fill="#FFB4A5"
-        paused={false}
-        className="w-full z-10 rotate-180"
-        options={{
-          height: 20,
-          amplitude: 50,
-          speed: 0.15,
-          points: 6,
-        }}
-      />
     </div>
   );
 };

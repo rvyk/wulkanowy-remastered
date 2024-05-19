@@ -17,6 +17,7 @@
 
 ::-webkit-scrollbar-track {
   background: #2e1b17;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -25,7 +26,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary-hover);
+  background: #ffc8bd;
 }
 
 @keyframes float {
