@@ -1,4 +1,4 @@
-export type WulkanowyMessages = {
+type WulkanowyMessages = {
   id: number;
   title: string;
   content: string;

@@ -20,7 +20,10 @@ const repositories = [
 ];
 
 const Community = () => {
-  const [repos, setRepos] = useState<Record<string, any | null> | null>(null);
+  const [repos, setRepos] = useState<Record<
+    string,
+    Contributor[] | null
+  > | null>(null);
 
   useEffect(() => {
     repositories.forEach((repo) => {
@@ -75,7 +78,7 @@ const Community = () => {
                   </AccordionTrigger>
                   <AccordionContent className="grid !pb-0 text-center [grid-template-columns:repeat(auto-fill,minmax(180px,1fr))]">
                     {repos?.[repo] !== null &&
-                      repos?.[repo]?.map((contributor: any, index: number) => (
+                      repos?.[repo]?.map((contributor, index) => (
                         <Link
                           key={`${repo}-${index}`}
                           href={contributor.html_url}
