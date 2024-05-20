@@ -1,5 +1,4 @@
 import useBetterMediaQuery from "@/hooks/use-media-query";
-import { DevRelease, Release, RemoteDevRelease } from "@/types/github";
 import { CircleOff, Download, Github } from "lucide-react";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -7,6 +6,7 @@ import Wave from "react-wavify";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { Drawer, DrawerContent } from "./ui/drawer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import Link from "next/link";
 
 const Downloads: React.FC<{
   sectionsRef: React.MutableRefObject<HTMLDivElement[] | null>;
@@ -100,12 +100,12 @@ const Downloads: React.FC<{
         <div className="relative flex w-full flex-col items-center justify-center bg-primary py-24 max-lg:px-6">
           <h2
             data-aos="fade-up"
-            className="pb-12 text-4xl font-semibold text-onPrimary"
+            className="pb-12 text-4xl font-semibold text-surface"
           >
             Pobierz aplikację
           </h2>
           <div className="flex flex-wrap justify-center gap-8">
-            <a
+            <Link
               href="https://play.google.com/store/apps/details?id=io.github.wulkanowy&utm_source=homepage"
               target="_blank"
               data-aos="fade-up"
@@ -123,8 +123,8 @@ const Downloads: React.FC<{
                   <h2 className="text-xl font-medium">Google Play</h2>
                 </div>
               </div>
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://appgallery.huawei.com/#/app/C101440411"
               target="_blank"
               data-aos="fade-up"
@@ -138,8 +138,8 @@ const Downloads: React.FC<{
                   <h2 className="text-xl font-medium">AppGallery</h2>
                 </div>
               </div>
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://f-droid.org/packages/io.github.wulkanowy/"
               target="_blank"
               data-aos="fade-up"
@@ -153,7 +153,7 @@ const Downloads: React.FC<{
                   <h2 className="text-xl font-medium">F-Droid</h2>
                 </div>
               </div>
-            </a>
+            </Link>
             <button
               onClick={() => setIsDialogOpen(true)}
               data-aos="fade-up"
@@ -216,13 +216,13 @@ const Content: React.FC<{ releases: Release[]; devReleases: DevRelease[] }> = ({
               <div key={index} className="min-h-16">
                 <div className="flex items-center justify-between">
                   <div className="flex items-start gap-4">
-                    <a
+                    <Link
                       href={release.html_url}
                       target="_blank"
                       className="inline-flex gap-2 rounded-button bg-primary px-4 py-3 font-medium text-onPrimary transition-all hover:bg-onSecondaryContainer"
                     >
                       <Github />
-                    </a>
+                    </Link>
                     <div className="grid text-left">
                       <h2 className="font-medium">Wersja {release.name}</h2>
                       <p className="text-sm">
@@ -230,9 +230,9 @@ const Content: React.FC<{ releases: Release[]; devReleases: DevRelease[] }> = ({
                       </p>
                     </div>
                   </div>
-                  <a href={release.assets[0].browser_download_url}>
+                  <Link href={release.assets[0].browser_download_url}>
                     <Download className="h-8 w-8" color="#FFB4A5" />
-                  </a>
+                  </Link>
                 </div>
                 {index == releases.length - 1 ? null : (
                   <hr className="mt-4 h-[2px] w-full border-none bg-surfaceContainerHighest" />
@@ -258,13 +258,13 @@ const Content: React.FC<{ releases: Release[]; devReleases: DevRelease[] }> = ({
               <div key={index} className="min-h-16">
                 <div className="flex items-center justify-between">
                   <div className="flex items-start gap-4">
-                    <a
+                    <Link
                       href={release.github}
                       target="_blank"
                       className="inline-flex gap-2 rounded-button bg-primary px-4 py-3 font-medium text-onPrimary transition-all hover:bg-onSecondaryContainer"
                     >
                       <Github />
-                    </a>
+                    </Link>
                     <div className="grid text-left">
                       <h2 className="font-medium">
                         {release.title}{" "}
@@ -276,7 +276,7 @@ const Content: React.FC<{ releases: Release[]; devReleases: DevRelease[] }> = ({
                         <p className="text-sm">
                           {moment(release.released).locale("pl").fromNow()},
                         </p>
-                        <a
+                        <Link
                           href={release.github}
                           className="flex w-fit items-center gap-2 text-sm"
                         >
@@ -286,14 +286,14 @@ const Content: React.FC<{ releases: Release[]; devReleases: DevRelease[] }> = ({
                             className="h-5 w-5 rounded-3xl"
                           />
                           {release.user}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
                   {release.download && (
-                    <a href={release.download} target="_blank">
+                    <Link href={release.download} target="_blank">
                       <Download className="h-8 w-8" color="#FFB4A5" />
-                    </a>
+                    </Link>
                   )}
                 </div>
                 {index == devReleases.length - 1 ? null : (

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 
 const paths = [
@@ -52,14 +53,14 @@ const Navbar: React.FC<{
               data-aos-delay={100 + index * 100}
               data-aos="fade-up"
             >
-              <a
+              <Link
                 href={path.path}
                 className={`${
                   pathname == path.path && "!bg-primary !text-onPrimary"
                 } inline-flex gap-2 rounded-button px-6 py-3 font-medium text-onBackground transition-all hover:bg-primary hover:text-onPrimary`}
               >
                 {path.name}
-              </a>
+              </Link>
             </div>
           ))}
         </div>

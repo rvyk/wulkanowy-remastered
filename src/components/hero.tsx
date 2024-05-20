@@ -1,6 +1,7 @@
 "use client";
 
 import { Download, MessageCircleQuestion } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Wave from "react-wavify";
 
@@ -65,20 +66,20 @@ const Hero: React.FC<{
           </div>
           <div className="flex gap-x-6 max-lg:flex-col max-lg:items-center max-lg:gap-y-4">
             <div data-aos="fade-up" data-aos-delay="400">
-              <a
+              <Link
                 href="/#pobieranie"
                 className="inline-flex items-center gap-2 rounded-button bg-primary px-6 py-3 font-medium text-onPrimary transition-all hover:bg-onSecondaryContainer"
               >
                 <Download /> Pobierz
-              </a>
+              </Link>
             </div>
             <div data-aos="fade-up" data-aos-delay="500">
-              <a
+              <Link
                 href="/#faq"
                 className="inline-flex items-center gap-2 rounded-button border-2 border-outline px-6 py-3 font-medium text-onSecondaryContainer transition-all hover:border-primary hover:bg-primary hover:text-onPrimary"
               >
                 <MessageCircleQuestion /> Często zadawane pytania
-              </a>
+              </Link>
             </div>
           </div>
         </div>

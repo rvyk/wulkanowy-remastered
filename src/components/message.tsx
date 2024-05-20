@@ -2,8 +2,8 @@
 
 import useBetterMediaQuery from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
-import { WulkanowyMessages } from "@/types/wulkanowy";
 import { X } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Message: React.FC = () => {
@@ -59,7 +59,7 @@ const Message: React.FC = () => {
       className="relative z-50 flex w-full items-center justify-center px-6 max-lg:top-6 lg:fixed lg:bottom-6"
     >
       <div className="relative flex min-h-20 items-center rounded-3xl bg-secondaryFixed text-center font-medium text-onSecondaryFixed lg:px-16">
-        <a
+        <Link
           href={message.destinationUrl || ""}
           target="_blank"
           className={cn(
@@ -67,7 +67,7 @@ const Message: React.FC = () => {
           )}
         >
           <p className="p-4">{message.content}</p>
-        </a>
+        </Link>
         <button
           onClick={handleClose}
           className="absolute right-8 rounded-button bg-onSecondaryContainer p-2 text-onSecondaryFixed max-lg:hidden"
