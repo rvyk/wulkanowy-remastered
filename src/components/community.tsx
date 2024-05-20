@@ -26,15 +26,19 @@ const Community = () => {
   > | null>(null);
 
   useEffect(() => {
-    repositories.forEach((repo) => {
-      fetch(`https://api.github.com/repos/wulkanowy/${repo}/contributors`)
-        .then((res) => res.json())
-        .then((data: Contributor[]) => {
-          const filteredData = data.filter((contributor) => !contributor.html_url.includes("apps/"));
-          setRepos((prev) => ({ ...prev, [repo]: filteredData }));
-        });
-    });
+    try {
+      repositories.forEach((repo) => {
+        fetch(`https://api.github.com/repos/wulkanowy/${repo}/contributors`)
+          .then((res) => res.json())
+          .then((data: Contributor[]) => {
+            const filteredData = data.filter((contributor) => !contributor.html_url.includes("apps/"));
+            setRepos((prev) => ({ ...prev, [repo]: filteredData }));
+          });
+      });
+    } catch (e) {}
   }, []);
+
+  if (!repos) return null;
 
   return (
     <div
@@ -84,8 +88,9 @@ const Community = () => {
                       repos?.[repo]?.map((contributor, index) => (
                         <Link
                           key={`${repo}-${index}`}
+                          target="_blank"
                           href={contributor.html_url}
-                          className="flex items-center text-left gap-4 p-4 border-r border-surfaceContainer border-b hover:bg-onSurface hover:bg-opacity-10"
+                          className="flex items-center text-left gap-4 p-4 border-r border-surfaceContainer border-b hover:bg-onSurface transition-all hover:bg-opacity-10"
                         >
                           <img
                             src={contributor.avatar_url}
