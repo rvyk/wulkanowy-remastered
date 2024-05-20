@@ -1,5 +1,6 @@
 "use client";
 
+import Community from "@/components/community";
 import Downloads from "@/components/downloads";
 import Functions from "@/components/functions";
 import Hero from "@/components/hero";
@@ -47,6 +48,7 @@ export default function Home() {
       <Hero {...{ sectionsRef }} />
       <Downloads {...{ sectionsRef }} />
       <Functions {...{ sectionsRef }} />
+      <Community />
     </div>
   );
 }
