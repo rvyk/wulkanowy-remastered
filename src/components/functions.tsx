@@ -110,12 +110,12 @@ const Functions: React.FC<{
           sectionsRef.current?.push(el);
         }
       }}
-      className="py-48 -mt-24 bg-surface "
+      className="-mt-24 bg-surface py-48 "
     >
       <div className="container overflow-hidden px-6">
         <h2
           data-aos="fade-right"
-          className="text-4xl font-semibold text-center text-onSurface pb-12"
+          className="pb-12 text-center text-4xl font-semibold text-onSurface"
         >
           Porównaj funkcje różnych aplikacji
         </h2>
@@ -127,16 +127,16 @@ const Functions: React.FC<{
           <table className="w-full">
             <thead className="">
               <tr className="">
-                <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg rounded-tl-3xl">
+                <th className="rounded-tl-3xl bg-surfaceContainerHighest px-6 py-6 text-lg text-onBackground">
                   Funkcja
                 </th>
-                <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg">
+                <th className="bg-surfaceContainerHighest px-6 py-6 text-lg text-onBackground">
                   Strona UONET+
                 </th>
-                <th className="bg-surfaceContainerHighest text-onBackground px-6 py-6 text-lg">
+                <th className="bg-surfaceContainerHighest px-6 py-6 text-lg text-onBackground">
                   Dzienniczek VULCAN
                 </th>
-                <th className="bg-surfaceContainerLow text-onSurfaceVariant  px-6 py-6 text-lg rounded-tr-3xl">
+                <th className="rounded-tr-3xl bg-surfaceContainerLow  px-6 py-6 text-lg text-onSurfaceVariant">
                   Wulkanowy
                 </th>
               </tr>
@@ -149,21 +149,21 @@ const Functions: React.FC<{
                     index % 2 == 0
                       ? "bg-surfaceVariant"
                       : "bg-surfaceContainerHighest"
-                  } px-6 py-3 text-onBackground text-center`}
+                  } px-6 py-3 text-center text-onBackground`}
                 >
                   <td
                     className={`${
                       index == features.length - 1 && "rounded-bl-3xl"
-                    } text-center font-medium px-5 py-5`}
+                    } px-5 py-5 text-center font-medium`}
                   >
                     {feature.feature}
                   </td>
-                  <td className="text-center font-medium py-5 px-5">
+                  <td className="px-5 py-5 text-center font-medium">
                     <div className="grid place-items-center">
                       {FeatureToIcon({ feature: feature.uonet })}
                     </div>
                   </td>
-                  <td className="text-center font-medium py-5 px-5">
+                  <td className="px-5 py-5 text-center font-medium">
                     <div className="grid place-items-center">
                       {FeatureToIcon({ feature: feature.vulcan })}
                     </div>
@@ -175,7 +175,7 @@ const Functions: React.FC<{
                         : "bg-surfaceContainerHigh"
                     } ${
                       index == features.length - 1 && "rounded-br-3xl"
-                    } text-center font-medium py-5 px-5`}
+                    } px-5 py-5 text-center font-medium`}
                   >
                     <div className="grid place-items-center">
                       {FeatureToIcon({ feature: feature.wulkanowy })}

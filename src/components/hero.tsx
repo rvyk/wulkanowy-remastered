@@ -1,8 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { Download, MessageCircleQuestion } from "lucide-react";
-import { LegacyRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Wave from "react-wavify";
 
 const Hero: React.FC<{
@@ -23,19 +22,19 @@ const Hero: React.FC<{
           sectionsRef.current?.push(el);
         }
       }}
-      className="relative min-h-screen h-full"
+      className="relative h-full min-h-screen"
     >
       <img
         src="/wulkanowy-logo-black.svg"
-        className="w-full h-full absolute opacity-[0.01]"
+        className="absolute h-full w-full opacity-[0.01]"
         alt=""
       />
-      <div className="container px-6 z-20 gap-24 flex max-lg:pt-16 flex-col lg:grid grid-cols-2 items-center justify-center min-h-screen">
-        <div className="grid gap-8 h-fit">
+      <div className="container z-20 flex min-h-screen grid-cols-2 flex-col items-center justify-center gap-24 px-6 max-lg:pt-16 lg:grid">
+        <div className="grid h-fit gap-8">
           {latestVersion && (
             <p
               data-aos="fade-right"
-              className="font-medium transition-all max-lg:mx-auto bg-primary text-onPrimary rounded-3xl py-3 px-6 w-fit"
+              className="w-fit rounded-3xl bg-primary px-6 py-3 font-medium text-onPrimary transition-all max-lg:mx-auto"
             >
               Najnowsza wersja to{" "}
               <span className="font-semibold">{latestVersion}</span>!
@@ -48,7 +47,7 @@ const Hero: React.FC<{
               className="text-5xl font-semibold text-onSurface lg:whitespace-nowrap"
             >
               Wulkanowy{" "}
-              <span className="text-onSurfaceVariant font-bold">
+              <span className="font-bold text-onSurfaceVariant">
                 Dzienniczek
               </span>
             </h1>
@@ -64,11 +63,11 @@ const Hero: React.FC<{
               dla ucznia i rodzica
             </p>
           </div>
-          <div className="flex gap-x-6 max-lg:gap-y-4 max-lg:items-center max-lg:flex-col">
+          <div className="flex gap-x-6 max-lg:flex-col max-lg:items-center max-lg:gap-y-4">
             <div data-aos="fade-up" data-aos-delay="400">
               <a
                 href="/#pobieranie"
-                className="px-6 py-3 font-medium bg-primary hover:bg-onSecondaryContainer transition-all text-onPrimary rounded-button inline-flex items-center gap-2"
+                className="inline-flex items-center gap-2 rounded-button bg-primary px-6 py-3 font-medium text-onPrimary transition-all hover:bg-onSecondaryContainer"
               >
                 <Download /> Pobierz
               </a>
@@ -76,7 +75,7 @@ const Hero: React.FC<{
             <div data-aos="fade-up" data-aos-delay="500">
               <a
                 href="/#faq"
-                className="px-6 py-3 font-medium hover:bg-primary hover:text-onPrimary hover:border-primary transition-all border-outline border-2 text-onSecondaryContainer rounded-button items-center inline-flex gap-2"
+                className="inline-flex items-center gap-2 rounded-button border-2 border-outline px-6 py-3 font-medium text-onSecondaryContainer transition-all hover:border-primary hover:bg-primary hover:text-onPrimary"
               >
                 <MessageCircleQuestion /> Często zadawane pytania
               </a>
@@ -85,15 +84,15 @@ const Hero: React.FC<{
         </div>
         <div className="grid justify-end">
           <div data-aos="fade-up" data-aos-delay="600">
-            <div className="relative float border-onSurface dark:border-onSurface bg-onSurface border-[14px] rounded-[2.5rem] h-[600px] max-w-[300px]">
-              <div className="h-[32px] w-[3px] bg-onSurface dark:bg-onSurface absolute -start-[17px] top-[72px] rounded-s-lg"></div>
-              <div className="h-[46px] w-[3px] bg-onSurface dark:bg-onSurface absolute -start-[17px] top-[124px] rounded-s-lg"></div>
-              <div className="h-[46px] w-[3px] bg-onSurface dark:bg-onSurface absolute -start-[17px] top-[178px] rounded-s-lg"></div>
-              <div className="h-[64px] w-[3px] bg-onSurface dark:bg-onSurface absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-              <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-onSurface">
+            <div className="float relative h-[600px] max-w-[300px] rounded-[2.5rem] border-[14px] border-onSurface bg-onSurface dark:border-onSurface">
+              <div className="rounded-s-lg absolute -start-[17px] top-[72px] h-[32px] w-[3px] bg-onSurface dark:bg-onSurface"></div>
+              <div className="rounded-s-lg absolute -start-[17px] top-[124px] h-[46px] w-[3px] bg-onSurface dark:bg-onSurface"></div>
+              <div className="rounded-s-lg absolute -start-[17px] top-[178px] h-[46px] w-[3px] bg-onSurface dark:bg-onSurface"></div>
+              <div className="rounded-e-lg absolute -end-[17px] top-[142px] h-[64px] w-[3px] bg-onSurface dark:bg-onSurface"></div>
+              <div className="bg-white h-[572px] w-[272px] overflow-hidden rounded-[2rem] dark:bg-onSurface">
                 <img
                   src="https://raw.githubusercontent.com/wulkanowy/branding/master/wulkanowy/2.6.0/screenshots/03%203.png"
-                  className="w-[272px] h-[572px]"
+                  className="h-[572px] w-[272px]"
                   alt=""
                 />
               </div>
@@ -104,7 +103,7 @@ const Hero: React.FC<{
       <Wave
         fill="#FFB4A5"
         paused={false}
-        className="absolute bottom-0 w-full z-10"
+        className="absolute bottom-0 z-10 w-full"
         options={{
           height: 20,
           amplitude: 50,

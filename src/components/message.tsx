@@ -23,7 +23,7 @@ const Message: React.FC = () => {
           (message) =>
             !message.targetFlavor &&
             message.priority != "LOW" &&
-            message.messageTypes.includes("GENERAL_MESSAGE")
+            message.messageTypes.includes("GENERAL_MESSAGE"),
         );
         const firstMessage = filteredMessages[0];
 
@@ -44,7 +44,7 @@ const Message: React.FC = () => {
     setMessage(undefined);
     localStorage.setItem(
       "hiddenMessages",
-      JSON.stringify(hiddenMessages.concat(message?.id || []))
+      JSON.stringify(hiddenMessages.concat(message?.id || [])),
     );
   };
 
@@ -56,28 +56,28 @@ const Message: React.FC = () => {
       data-aos-delay={isDesktop ? 1000 : 0}
       data-aos-once="true"
       data-aos-offset="-500"
-      className="flex justify-center relative items-center lg:fixed max-lg:top-6 lg:bottom-6 z-50 w-full px-6"
+      className="relative z-50 flex w-full items-center justify-center px-6 max-lg:top-6 lg:fixed lg:bottom-6"
     >
-      <div className="relative bg-secondaryFixed text-onSecondaryFixed text-center font-medium min-h-20 rounded-3xl flex items-center lg:px-16">
+      <div className="relative flex min-h-20 items-center rounded-3xl bg-secondaryFixed text-center font-medium text-onSecondaryFixed lg:px-16">
         <a
           href={message.destinationUrl || ""}
           target="_blank"
           className={cn(
-            !message.destinationUrl && "cursor-default pointer-events-none"
+            !message.destinationUrl && "pointer-events-none cursor-default",
           )}
         >
           <p className="p-4">{message.content}</p>
         </a>
         <button
           onClick={handleClose}
-          className="absolute right-8 max-lg:hidden bg-onSecondaryContainer rounded-button p-2 text-onSecondaryFixed"
+          className="absolute right-8 rounded-button bg-onSecondaryContainer p-2 text-onSecondaryFixed max-lg:hidden"
         >
           <X />
         </button>
       </div>
       <button
         onClick={handleClose}
-        className="absolute -bottom-4 right-3 bg-onSecondaryContainer rounded-button p-2 text-onSecondaryFixed lg:hidden"
+        className="absolute -bottom-4 right-3 rounded-button bg-onSecondaryContainer p-2 text-onSecondaryFixed lg:hidden"
       >
         <X />
       </button>

@@ -1,15 +1,16 @@
 "use client";
 
+import { beutifyRepoName } from "@/lib/utils";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import Wave from "react-wavify";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion";
-import Link from "next/link";
-import { beutifyRepoName } from "@/lib/utils";
-import Wave from "react-wavify";
 
 const repositories = [
   "wulkanowy",
@@ -42,7 +43,7 @@ const Community = () => {
       <Wave
         fill="#200F0B"
         paused={false}
-        className="absolute -top-1 w-full z-10 rotate-180"
+        className="absolute -top-1 z-10 w-full rotate-180"
         options={{
           height: 20,
           amplitude: 50,
@@ -50,11 +51,11 @@ const Community = () => {
           points: 6,
         }}
       />
-      <div className="w-full relative py-24 pt-60 bg-primary">
-        <div className="flex flex-col items-end justify-center container">
+      <div className="relative w-full bg-primary py-24 pt-60">
+        <div className="container flex flex-col items-end justify-center">
           <h2
             data-aos="fade-up"
-            className="text-4xl font-semibold text-onPrimary pb-12"
+            className="pb-12 text-4xl font-semibold text-onPrimary"
           >
             Przez Uczniów, dla Uczniów
           </h2>
@@ -66,24 +67,24 @@ const Community = () => {
                 defaultValue={repo}
                 key={repo}
               >
-                <AccordionItem value={repo} className="border-2 rounded-3xl">
-                  <AccordionTrigger className=" px-5 py-4 bg-onSurfaceVariant rounded-t-3xl data-[state=closed]:rounded-b-3xl data-[state=open]:border-b-2">
+                <AccordionItem value={repo} className="rounded-3xl border-2">
+                  <AccordionTrigger className=" rounded-t-3xl bg-onSurfaceVariant px-5 py-4 data-[state=closed]:rounded-b-3xl data-[state=open]:border-b-2">
                     <Link href={`https://github.com/wulkanowy/${repo}`}>
                       {beutifyRepoName(repo)}
                     </Link>
                   </AccordionTrigger>
-                  <AccordionContent className="!pb-0 grid [grid-template-columns:repeat(auto-fill,minmax(180px,1fr))] text-center">
+                  <AccordionContent className="grid !pb-0 text-center [grid-template-columns:repeat(auto-fill,minmax(180px,1fr))]">
                     {repos?.[repo] !== null &&
                       repos?.[repo]?.map((contributor: any, index: number) => (
                         <Link
                           key={`${repo}-${index}`}
                           href={contributor.html_url}
-                          className="flex items-center gap-2 p-4 border-onPrimary hover:bg-onSurface hover:bg-opacity-10"
+                          className="flex items-center gap-2 border-onPrimary p-4 hover:bg-onSurface hover:bg-opacity-10"
                         >
                           <img
                             src={contributor.avatar_url}
                             alt={contributor.login}
-                            className="w-12 h-12 rounded-3xl rounded-full"
+                            className="rounded-full h-12 w-12 rounded-3xl"
                           />
                           <span className="text-onPrimary">
                             {contributor.login}

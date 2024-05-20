@@ -40,10 +40,10 @@ const Navbar: React.FC<{
   }, [setPathname]);
 
   return (
-    <div className="flex max-lg:hidden justify-center items-center fixed top-0 z-50 w-full">
+    <div className="fixed top-0 z-50 flex w-full items-center justify-center max-lg:hidden">
       <div
         data-aos="fade-down"
-        className="bg-surfaceContainer h-20 rounded-b-3xl flex items-center px-24"
+        className="flex h-20 items-center rounded-b-3xl bg-surfaceContainer px-24"
       >
         <div className="flex gap-8">
           {paths.map((path, index) => (
@@ -56,7 +56,7 @@ const Navbar: React.FC<{
                 href={path.path}
                 className={`${
                   pathname == path.path && "!bg-primary !text-onPrimary"
-                } px-6 hover:bg-primary hover:text-onPrimary transition-all py-3 font-medium text-onBackground rounded-button inline-flex gap-2`}
+                } inline-flex gap-2 rounded-button px-6 py-3 font-medium text-onBackground transition-all hover:bg-primary hover:text-onPrimary`}
               >
                 {path.name}
               </a>

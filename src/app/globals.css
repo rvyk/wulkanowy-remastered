@@ -6,7 +6,7 @@
 
 @layer base {
   html {
-    @apply scroll-smooth scroll-p-24;
+    @apply scroll-p-24 scroll-smooth;
   }
 
   body {
